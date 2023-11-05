@@ -20,7 +20,6 @@ Image::Image()
 }
 
 Image::Image(const int width, const int height, const int m_nChannels)
-
 {
 	this->m_height = height;
 	this->m_width = width;
@@ -50,10 +49,6 @@ Image::Image(Image&& obj) noexcept
 	m_data = std::move(obj.m_data);
 
 	obj.m_data = nullptr;
-}
-
-Image::~Image()
-{
 }
 
 Image& Image::operator=(const Image& obj)
