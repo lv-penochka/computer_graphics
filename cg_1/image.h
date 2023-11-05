@@ -4,8 +4,6 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
-
 class Image final
 {
 public:
@@ -20,8 +18,8 @@ public:
     Image& operator=(const Image&);
     Image& operator=(Image&&) noexcept;
 
-    bool isRead(const string& path);
-    bool isWrite(const string& path);
+    bool isRead(const std::string& path);
+    bool isWrite(const std::string& path);
     
     void setPixel(const int row, const int col, const int r, const int g, const int b, const int a);
     void getPixel(const int row, const int col, int& r, int& g, int& b, int& a);
@@ -44,7 +42,7 @@ private:
     int m_size;
 
 
-    unique_ptr<uint8_t[]> m_data{ nullptr };
+    std::unique_ptr<uint8_t[]> m_data{ nullptr };
 };
 
 
