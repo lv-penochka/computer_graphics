@@ -2,7 +2,9 @@ add_subdirectory(libs)
 
 project("lab_1")
 
-file(GLOB_RECURSE HEADERS "*.h")
-file(GLOB_RECURSE SOURCES "*.cpp")
+add_executable(${PROJECT_NAME} "main.cpp")
 
-add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
+target_link_libraries(${PROJECT_NAME} PUBLIC matplot)
+target_include_directories(${PROJECT_NAME} PUBLIC matplot)
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)

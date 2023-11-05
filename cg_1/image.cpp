@@ -4,10 +4,12 @@
 
 #include "image.h"
 
-#include "libs/stb_image.h"
-#include "libs/stb_image_write.h"
+//#include <stb_image.hpp>
+//#include <stb_image_write.hpp>
 #include <algorithm>
 #include <array>
+#include "stb_image.hpp"
+#include "stb_image_write.hpp"
 
 
 Image::Image()

@@ -1,19 +1,18 @@
-#include "image.h"
+#include <cmath>
+#include <matplot/matplot.h>
+#include <set>
 
-int main()
-{
-	// Пример использования методов эквализации и растяжения гистограммы
-	Image image1;
-	image1.isRead("D:/Downloads/11.jpg");
-	// ... Загрузить изображение с помощью isRead()
-	Image image2;
-	image2.isRead("D:/Downloads/11.jpg");
+int main() {
+    using namespace matplot;
+    std::vector<double> x = linspace(0, 2 * pi);
+    std::vector<double> y = transform(x, [](auto x) { return sin(x); });
 
-	// Применить эквализацию гистограммы
-	image1.equalizeHistogram();
-	image1.isWrite("D:/Downloads/new_equal.png");
+    plot(x, y, "-o");
+    hold(on);
+    plot(x, transform(y, [](auto y) { return -y; }), "--xr");
+    plot(x, transform(x, [](auto x) { return x / pi - 1.; }), "-:gs");
+    plot({ 1.0, 0.7, 0.4, 0.0, -0.4, -0.7, -1 }, "k");
 
-	// Применить равномерное растяжение гистограммы
-	image2.stretchHistogram();
-	image2.isWrite("D:/Downloads/new_stretch.png");
+    show();
+    return 0;
 }
