@@ -4,6 +4,9 @@
 #include <string>
 #include <iostream>
 
+namespace ImageTransformation 
+{
+
 class Image final
 {
 public:
@@ -22,21 +25,17 @@ public:
     void setPixel(const int row, const int col, const int r, const int g, const int b, const int a);
     void getPixel(const int row, const int col, int& r, int& g, int& b, int& a);
 
-    void equalizeHistogram();
-    std::array<int, 256> getHistogram() const;
-    void stretchHistogram();
-
-    std::pair<uint8_t, uint8_t> getMinMaxBrightness() const;
-
 private:
-    int m_width{ 0 };
-    int m_height{ 0 };
+    friend class Histogram;
+    int width{ 0 };
+    int height{ 0 };
 
-    int m_nChannels;
+    int numberChannels;
 
-    int m_size;
+    int size;
 
-    std::unique_ptr<uint8_t[]> m_data{ nullptr };
+    std::unique_ptr<uint8_t[]> data{ nullptr };
 };
 
+} // namespace ImageTransformation
 

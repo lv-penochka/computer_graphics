@@ -1,18 +1,21 @@
-#include <cmath>
-#include <matplot/matplot.h>
-#include <set>
+#include "image.h"
+#include "Histogram.h"
 
-int main() {
-    using namespace matplot;
-    std::vector<double> x = linspace(0, 2 * pi);
-    std::vector<double> y = transform(x, [](auto x) { return sin(x); });
+int main() 
+{
+	using namespace ImageTransformation;
 
-    plot(x, y, "-o");
-    hold(on);
-    plot(x, transform(y, [](auto y) { return -y; }), "--xr");
-    plot(x, transform(x, [](auto x) { return x / pi - 1.; }), "-:gs");
-    plot({ 1.0, 0.7, 0.4, 0.0, -0.4, -0.7, -1 }, "k");
+	Image image;
+	std::cout << image.isRead("images/1.jpg");
+	// ... Загрузить изображение с помощью isRead()
 
-    show();
-    return 0;
+	Histogram hist{ image };
+
+	// Применить эквализацию гистограммы
+	auto eq = hist.generateEqualized();
+	std::cout << eq.isWrite("images/eq.png");
+
+	// Применить равномерное растяжение гистограммы
+	auto st = hist.generateStretched();
+	std::cout << st.isWrite("images/st.png");
 }
