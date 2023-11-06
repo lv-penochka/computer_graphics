@@ -1,5 +1,7 @@
 #include "Histogram.h"
 
+#include <matplot/matplot.h>
+
 namespace ImageTransformation
 {
 
@@ -51,6 +53,17 @@ Image Histogram::generateStretched()
         stretched.data[i] = stretchedValue;
     }
     return stretched;
+}
+
+void Histogram::show() const
+{
+    std::array<int, 256> temp;
+    for (int i = 0; i < temp.size(); ++i) {
+        temp[i] = i;
+    }
+    matplot::stairs(temp, frequencyArray);
+    matplot::show();
+    return;
 }
 
 std::pair<uint8_t, uint8_t> Histogram::getMinMaxBrightness() const

@@ -22,6 +22,8 @@ public:
     Image generateEqualized();
     Image generateStretched();
 
+    void show() const;
+
 private:
     std::pair<uint8_t, uint8_t> getMinMaxBrightness() const;
     int getCumulativeFrequency(int stopBrightnessIndex) const;

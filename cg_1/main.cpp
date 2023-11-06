@@ -10,12 +10,15 @@ int main()
 	// ... Загрузить изображение с помощью isRead()
 
 	Histogram hist{ image };
-
+	hist.show();
 	// Применить эквализацию гистограммы
 	auto eq = hist.generateEqualized();
 	std::cout << eq.isWrite("images/eq.png");
+	Histogram(eq).show();
 
 	// Применить равномерное растяжение гистограммы
 	auto st = hist.generateStretched();
 	std::cout << st.isWrite("images/st.png");
+	Histogram(st).show();
+
 }
