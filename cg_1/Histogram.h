@@ -45,16 +45,39 @@ public:
     {
         Image<ColorTypeTrait> stretched(sourceImage);
 
-        auto brightness = getMinMaxBrightness();
-        auto minBrightness = brightness.first;
-        auto maxBrightness = brightness.second;
+        auto redBrightness = getMinMaxBrightness(RED);
+        auto redMinBrightness = redBrightness.first;
+        auto redMaxBrightness = redBrightness.second;
 
-        for (int i = 0; i < stretched.size; ++i) {
+        for (int i = 0; i < stretched.size; i+=3) {
             ColorTypeTrait::codingType pixelValue = stretched.data[i];
-            ColorTypeTrait::codingType stretchedValue = (double(ColorTypeTrait::max) * (pixelValue - minBrightness) / (maxBrightness - minBrightness));
+            ColorTypeTrait::codingType stretchedValue = 
+                (double(ColorTypeTrait::max) * (pixelValue - redMinBrightness) / (redMaxBrightness - redMinBrightness));
             if (pixelValue != stretchedValue);
             stretched.data[i] = stretchedValue;
         }
+
+        auto greenBrightness = getMinMaxBrightness(GREEN);
+        auto greenMinBrightness = greenBrightness.first;
+        auto greenMaxBrightness = greenBrightness.second;
+
+        for (int i = 1; i < stretched.size; i += 3) {
+            ColorTypeTrait::codingType pixelValue = stretched.data[i];
+            ColorTypeTrait::codingType stretchedValue = (double(ColorTypeTrait::max) * (pixelValue - greenMinBrightness) / (greenMaxBrightness - greenMinBrightness));
+            if (pixelValue != stretchedValue);
+            stretched.data[i] = stretchedValue;
+        }
+        auto blueBrightness = getMinMaxBrightness(BLUE);
+        auto blueMinBrightness = blueBrightness.first;
+        auto blueMaxBrightness = blueBrightness.second;
+
+        for (int i = 2; i < stretched.size; i += 3) {
+            ColorTypeTrait::codingType pixelValue = stretched.data[i];
+            ColorTypeTrait::codingType stretchedValue = (double(ColorTypeTrait::max) * (pixelValue - blueMinBrightness) / (blueMaxBrightness - blueMinBrightness));
+            if (pixelValue != stretchedValue);
+            stretched.data[i] = stretchedValue;
+        }
+
         return stretched;
     }
 
@@ -71,11 +94,37 @@ public:
 
 private:
     using BrightnessFrequencyArray = std::array<int, ColorTypeTrait::bound>;
-    std::pair<typename ColorTypeTrait::codingType, typename ColorTypeTrait::codingType> getMinMaxBrightness() const
+    
+    enum Color {
+        RED = 0,
+        GREEN,
+        BLUE
+    };
+    
+    std::pair<typename ColorTypeTrait::codingType, typename ColorTypeTrait::codingType> getMinMaxBrightness(Color c) const
     {
-        int minValue = sourceImage.data[0];
-        int maxValue = sourceImage.data[0];
-        for (int i = 1; i < sourceImage.size; ++i) {
+        int minValue;
+        int maxValue;
+        int i;
+        switch (c) {
+        case RED: {
+            minValue = sourceImage.data[0];
+            maxValue = sourceImage.data[0];
+            i = 1;
+        } break;
+        case GREEN: {
+            minValue = sourceImage.data[1];
+            maxValue = sourceImage.data[1];
+            i = 2;
+        } break;
+        case BLUE: {
+            minValue = sourceImage.data[2];
+            maxValue = sourceImage.data[2];
+            i = 3;
+        } break;
+        }
+
+        for (; i < sourceImage.size; i+=3) {// TODO: meanwhile rgb, without capacity
             ColorTypeTrait::codingType pixelValue = sourceImage.data[i];
             if (pixelValue < minValue) {
                 minValue = pixelValue;

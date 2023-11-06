@@ -101,9 +101,14 @@ public:
 		return stbi_write_png(path.c_str(), width, height, numberChannels, data.get(), 0);
 	}
 
+	int getIndexOfPixel(const int row, const int col) const
+	{
+		return (row * width + col) * numberChannels;
+	}
+
 	void setPixel(const int row, const int col, const int r, const int g, const int b, const int a)
 	{
-		int index = (row * width + col) * numberChannels;
+		int index = getIndexOfPixel();
 
 		data[index] = static_cast<ColorTypeTrait::codingType>(r);
 		data[index + 1] = static_cast<ColorTypeTrait::codingType>(g);
