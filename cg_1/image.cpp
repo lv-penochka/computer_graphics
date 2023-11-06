@@ -10,9 +10,6 @@
 #include "stb_image.hpp"
 #include "stb_image_write.hpp"
 
-namespace ImageTransformation 
-{
-
 Image::Image()
 {
 	this->height = 0;
@@ -120,5 +117,3 @@ void Image::getPixel(const int row, const int col, int& r, int& g, int& b, int& 
 	else
 		a = 255;
 }
-
-} // namespace ImageTransformation

@@ -2,9 +2,6 @@
 
 #include <matplot/matplot.h>
 
-namespace ImageTransformation
-{
-
 Histogram::Histogram(const Image& image)
     : sourceImage(image)
 {
@@ -90,6 +87,3 @@ int Histogram::getCumulativeFrequency(int endBrightness) const
     }
     return result;
 }
-
-} // namespace ImageTransformation
-
