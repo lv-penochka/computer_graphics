@@ -53,8 +53,8 @@ public:
             ColorTypeTrait::codingType pixelValue = stretched.data[i];
             ColorTypeTrait::codingType stretchedValue = 
                 (double(ColorTypeTrait::max) * (pixelValue - redMinBrightness) / (redMaxBrightness - redMinBrightness));
-            if (pixelValue != stretchedValue);
-            stretched.data[i] = stretchedValue;
+            if (pixelValue != stretchedValue)
+                stretched.data[i] = stretchedValue;
         }
 
         auto greenBrightness = getMinMaxBrightness(GREEN);
@@ -63,9 +63,10 @@ public:
 
         for (int i = 1; i < stretched.size; i += 3) {
             ColorTypeTrait::codingType pixelValue = stretched.data[i];
-            ColorTypeTrait::codingType stretchedValue = (double(ColorTypeTrait::max) * (pixelValue - greenMinBrightness) / (greenMaxBrightness - greenMinBrightness));
-            if (pixelValue != stretchedValue);
-            stretched.data[i] = stretchedValue;
+            ColorTypeTrait::codingType stretchedValue = 
+                (double(ColorTypeTrait::max) * (pixelValue - greenMinBrightness) / (greenMaxBrightness - greenMinBrightness));
+            if (pixelValue != stretchedValue)
+                stretched.data[i] = stretchedValue;
         }
         auto blueBrightness = getMinMaxBrightness(BLUE);
         auto blueMinBrightness = blueBrightness.first;
@@ -73,9 +74,10 @@ public:
 
         for (int i = 2; i < stretched.size; i += 3) {
             ColorTypeTrait::codingType pixelValue = stretched.data[i];
-            ColorTypeTrait::codingType stretchedValue = (double(ColorTypeTrait::max) * (pixelValue - blueMinBrightness) / (blueMaxBrightness - blueMinBrightness));
-            if (pixelValue != stretchedValue);
-            stretched.data[i] = stretchedValue;
+            ColorTypeTrait::codingType stretchedValue = 
+                (double(ColorTypeTrait::max) * (pixelValue - blueMinBrightness) / (blueMaxBrightness - blueMinBrightness));
+            if (pixelValue != stretchedValue)
+                stretched.data[i] = stretchedValue;
         }
 
         return stretched;
