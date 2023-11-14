@@ -100,7 +100,8 @@ private:
     enum Color {
         RED = 0,
         GREEN,
-        BLUE
+        BLUE,
+        ALPHA
     };
     
     std::pair<typename ColorTypeTrait::codingType, typename ColorTypeTrait::codingType> getMinMaxBrightness(Color c) const
@@ -124,9 +125,19 @@ private:
             maxValue = sourceImage.data[2];
             i = 3;
         } break;
+        case ALPHA: {
+            minValue = sourceImage.data[3];
+            maxValue = sourceImage.data[3];
+            i = 4;
         }
+        }
+        
+        //std::cout << sourceImage.numberChannels << std::endl;
+        auto increment = sourceImage.numberChannels == 4
+            ? 4
+            : 3;
 
-        for (; i < sourceImage.size; i+=3) {// TODO: meanwhile rgb, without capacity
+        for (; i < sourceImage.size; i+=increment) {
             ColorTypeTrait::codingType pixelValue = sourceImage.data[i];
             if (pixelValue < minValue) {
                 minValue = pixelValue;

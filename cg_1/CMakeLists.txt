@@ -2,7 +2,7 @@ add_subdirectory(libs)
 
 project("lab_1")
 
-add_executable(${PROJECT_NAME} "main.cpp" "stb_image.hpp" "stb_image_write.hpp" "Image.h" "Histogram.h" "Traits.h")
+add_executable(${PROJECT_NAME} "main.cpp" "stb_image.hpp" "stb_image_write.hpp" "image.h" "histogram.h" "traits.h")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC matplot)
 target_include_directories(${PROJECT_NAME} PUBLIC matplot)
