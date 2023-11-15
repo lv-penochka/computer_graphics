@@ -3,20 +3,20 @@
 
 int main() 
 {
-	Image<ColorTypeTrait8_t> image;
+	Image image;
 	std::cout << image.isRead("images/1.jpg");
 	// ... Загрузить изображение с помощью isRead()
 
-	Histogram<ColorTypeTrait8_t> hist{ image };
+	Histogram hist{ image };
 	hist.show();
 	// Применить эквализацию гистограммы
 	auto eq = hist.generateEqualized();
 	std::cout << eq.isWrite("images/eq.png");
-	Histogram<ColorTypeTrait8_t>(eq).show();
+	Histogram(eq).show();
 
 	// Применить равномерное растяжение гистограммы
 	auto st = hist.generateStretched();
 	std::cout << st.isWrite("images/st.png");
-	Histogram<ColorTypeTrait8_t>(st).show();
+	Histogram(st).show();
 
 }

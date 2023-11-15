@@ -9,6 +9,7 @@
 
 #include "stb_image.hpp"
 #include "stb_image_write.hpp"
+#include <iostream>
 
 Image::Image()
 {
@@ -94,9 +95,14 @@ bool Image::isWrite(const std::string& path)
 	return stbi_write_png(path.c_str(), width, height, numberChannels, data.get(), 0);
 }
 
+int Image::getIndexOfPixel(const int row, const int col) const
+{
+	return (row * width + col) * numberChannels;;
+}
+
 void Image::setPixel(const int row, const int col, const int r, const int g, const int b, const int a)
 {
-	int index = (row * width + col) * numberChannels;
+	int index = getIndexOfPixel(row, col);
 
 	data[index] = static_cast<uint8_t>(r);
 	data[index + 1] = static_cast<uint8_t>(g);
@@ -107,7 +113,7 @@ void Image::setPixel(const int row, const int col, const int r, const int g, con
 
 void Image::getPixel(const int row, const int col, int& r, int& g, int& b, int& a)
 {
-	int index = (row * width + col) * numberChannels;
+	int index = getIndexOfPixel(row, col);
 
 	r = data[index];
 	g = data[index + 1];

@@ -34,23 +34,57 @@ Image Histogram::generateEqualized()
     }
     return equalized;
 }
-
 Image Histogram::generateStretched()
 {
     Image stretched(sourceImage);
 
-    auto brightness = getMinMaxBrightness();
-    auto minBrightness = brightness.first;
-    auto maxBrightness = brightness.second;
-
-    for (int i = 0; i < stretched.size; ++i) {
-        uint8_t pixelValue = stretched.data[i];
-        uint8_t stretchedValue = (255.0 * (pixelValue - minBrightness) / (maxBrightness - minBrightness));
-        if (pixelValue != stretchedValue);
-        stretched.data[i] = stretchedValue;
+    int min, max;
+    int* hist = new int[256];
+    for (int i = 0; i < 256; i++) hist[i] = 0;
+    min = max = stretched.data[0];
+    hist[stretched.data[0]]++;
+    for (int i = 1; i < stretched.size; i++) {
+        hist[stretched.data[i]]++;
+        if (stretched.data[i] < min) min = stretched.data[i];
+        else if (stretched.data[i] > max) max = stretched.data[i];
     }
+    int d = max - min;
+    int* F = new int[256];
+    int* H = new int[256];
+    for (int i = min; i <= max; i++) H[static_cast<int>(round((255.0 * (i - min) / d)))] = hist[i];
+
+    F[0] = H[0];
+    for (int i = 1; i < 256; i++) {
+        F[i] = F[i - 1] + H[i];
+    }
+
+    for (int i = 0; i < stretched.size; i++) {
+        stretched.data[i] = static_cast<uint8_t>((255.0 * (stretched.data[i] - min) / d));
+    }
+
+    delete[] hist;
+    delete[] F;
+    delete[] H;
+
     return stretched;
 }
+
+//Image Histogram::generateStretched()
+//{
+//    Image stretched(sourceImage);
+//
+//    auto brightness = getMinMaxBrightness();
+//    auto minBrightness = brightness.first;
+//    auto maxBrightness = brightness.second;
+//
+//    for (int i = 0; i < stretched.size; ++i) {
+//        uint8_t pixelValue = stretched.data[i];
+//        uint8_t stretchedValue = (255.0 * (pixelValue - minBrightness) / (maxBrightness - minBrightness));
+//        if (pixelValue != stretchedValue);
+//        stretched.data[i] = stretchedValue;
+//    }
+//    return stretched;
+//}
 
 void Histogram::show() const
 {
